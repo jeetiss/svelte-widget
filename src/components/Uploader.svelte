@@ -1,5 +1,5 @@
 <script>
-  import { setContext } from 'svelte'
+  import { setContext, createEventDispatcher } from "svelte";
   import { Tabs, TabList, TabPanel, Tab } from "./Tabs";
   import {
     File,
@@ -19,13 +19,15 @@
   } from "./Icons";
   import Button from "./Button.svelte";
   import Modal from "./Modal.svelte";
-  import l10n, { setLocale } from '../l10n'
+  import l10n, { setLocale } from "../l10n";
 
   export let locale;
 
-  $: setLocale(locale)
+  $: setLocale(locale);
 
   let showModal;
+
+  const dispatch = createEventDispatcher();
 </script>
 
 <main>
@@ -56,7 +58,11 @@
 
         <p>{$l10n('or')}</p>
 
-        <Button>{$l10n('Chose a local file')}</Button>
+        <Button
+          on:click="{() => dispatch('uploaded', { uuid: '36cda64e-7f8c-4e54-89f0-6a7b1d90a8dd' })}"
+        >
+          {$l10n('Chose a local file')}
+        </Button>
       </TabPanel>
 
       <TabPanel>
@@ -67,7 +73,7 @@
         <h2>{$l10n('Files from the Web')}</h2>
 
         <p>
-          <input type="text" placeholder="{$l10n('Paste your link here...')}"/>
+          <input type="text" placeholder="{$l10n('Paste your link here...')}" />
         </p>
 
         <Button>{$l10n('Upload')}</Button>
